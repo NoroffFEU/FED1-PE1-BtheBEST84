@@ -50,7 +50,7 @@ form.addEventListener("submit", async (event) => {
       alert("Login successful!");
 
       // Redirect to /post/index.html
-      window.location.href = "/post/index.html"; // Redirects to the specified page
+      window.location.href = "/account/profile.html"; // Redirects to the specified page
     }
   } catch (error) {
     errorMessage.textContent = "An error occurred. Please try again later.";
