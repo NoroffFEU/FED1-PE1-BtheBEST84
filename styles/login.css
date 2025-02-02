@@ -13,6 +13,8 @@ main {
 
 #form {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 #login-form {
   background-color: #d9d9d9;
@@ -21,8 +23,10 @@ main {
   margin-top: 50px;
   border-radius: 10px;
   justify-content: center;
-  height: 300px;
-  width: 500px;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+  padding: 50px;
 }
 
 #error-message {
