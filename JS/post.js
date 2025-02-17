@@ -1,28 +1,75 @@
-// Initiate array variable
-let postList = [];
+// Function to get query parameter by name
+function getQueryParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
 
-// Fetch posts
-async function getPosts() {
+// Fetch and display a single blog post
+async function fetchSinglePost() {
+  const postId = getQueryParam("id");
+
+  if (!postId) {
+    document.body.innerHTML = "<p>Post ID is missing.</p>";
+    return;
+  }
+
   try {
     const response = await fetch(
-      "https://v2.api.noroff.dev/blog/posts/BtheBEST"
+      `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`
     );
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const post = await response.json();
+    const postData = post.data;
 
-    // Check that the array is not empty or that it is not an array
-    if (!Array.isArray(data.data) || data.data.length === 0) {
-      throw new Error("");
+    document.getElementById("post-title").textContent = postData.title;
+
+    document.getElementById("post-body").textContent =
+      postData.body || "No content available.";
+
+    if (postData.media?.url) {
+      const imgElement = document.createElement("img");
+      imgElement.src = postData.media.url;
+      imgElement.onerror = () => {
+        imgElement.style.display = "none";
+      };
+      document.getElementById("post-image").prepend(imgElement);
     }
-    postList = data.data;
+
+    // Create tags
+    const tagsContainer = document.getElementById("post-tags");
+    if (postData.tags?.length) {
+      tagsContainer.innerHTML = `<div class="tags">Tags: ${postData.tags.join(
+        ", "
+      )}</div>`;
+    }
+
+    // Add author information to the post
+    const authorContainer = document.getElementById("post-author");
+    if (postData.author) {
+      authorContainer.innerHTML = `
+                <div class="author-info">
+                    ${
+                      postData.author.avatar?.url
+                        ? `<img src="${postData.author.avatar.url}" alt="${postData.author.avatar.alt}" class="author-avatar">`
+                        : ""
+                    }
+                    <h3>${postData.author.name || "Unknown Author"}</h3>
+                        <p>${postData.author.bio || ""}</p>
+                    <div>
+                        
+                    </div>
+                </div>
+            `;
+    }
   } catch (error) {
-    alert("Something went wrong");
+    console.error("Error fetching blog post:", error);
+    document.body.innerHTML = "<p>Failed to load blog post.</p>";
   }
 }
 
-// Call the function
-getPosts();
+// Call function to fetch the post
+fetchSinglePost();

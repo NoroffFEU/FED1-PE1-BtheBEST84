@@ -1,10 +1,106 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link rel="stylesheet" href="/styles/register.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap"
+      rel="stylesheet"
+    />
+    <title>RacingBear - A Simracers Journey</title>
   </head>
   <body>
-    <h1>This page is a page to register an account</h1>
+    <header>
+      <img id="header-logo" src="/images/logo.png" alt="" />
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="/posts.html" class="nav-link">Blog</a></li>
+        </ul>
+        <ul id="sign-in">
+          <li><a href="/account/register.html" class="nav-link">Sign Up</a></li>
+          <li><a href="/account/login.html" class="nav-link">Log In</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Register</h1>
+      <form id="register-form">
+        <label for="name">Username:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          pattern=".+@stud\.noroff\.no$"
+          title="Must be a valid Noroff student email"
+        />
+
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          minlength="8"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+          title="Password must be at least 8 characters long and include a number, an uppercase letter, and a lowercase letter."
+        />
+        <small
+          >Password must be at least 8 characters long and include a number, an
+          uppercase letter, and a lowercase letter.</small
+        >
+
+        <label for="bio">Bio:</label>
+        <textarea id="bio" name="bio"></textarea>
+
+        <label for="avatar-url">Avatar URL:</label>
+        <input type="url" id="avatar-url" name="avatar-url" />
+
+        <label for="avatar-alt">Avatar Alt Text:</label>
+        <input type="text" id="avatar-alt" name="avatar-alt" />
+
+        <label for="banner-url">Banner URL:</label>
+        <input type="url" id="banner-url" name="banner-url" />
+
+        <label for="banner-alt">Banner Alt Text:</label>
+        <input type="text" id="banner-alt" name="banner-alt" />
+
+        <label>
+          <input type="checkbox" id="venueManager" name="venueManager" />
+          Register as Venue Manager
+        </label>
+
+        <button type="submit">Register</button>
+      </form>
+
+      <p id="message"></p>
+    </main>
+    <footer>
+      <ul>
+        <li>
+          <a href=""><img src="/images/twitch.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/TwitterX.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/FacebookF.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/youtube.png" alt="" /></a>
+        </li>
+      </ul>
+      <p>&copy;RacingBear 2025. All rights reserved</p>
+    </footer>
+    <script src="/JS/register.js" defer></script>
   </body>
 </html>

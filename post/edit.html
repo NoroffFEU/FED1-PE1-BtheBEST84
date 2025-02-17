@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link rel="stylesheet" href="/styles/edit.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap"
+      rel="stylesheet"
+    />
+    <title>RacingBear - A Simracers Journey</title>
+  </head>
+  <body>
+    <header>
+      <img id="header-logo" src="/images/logo.png" alt="" />
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="/posts.html" class="nav-link">Blog</a></li>
+        </ul>
+        <ul id="sign-in">
+          <li><a href="/account/register.html" class="nav-link">Sign Up</a></li>
+          <li><a href="/account/login.html" class="nav-link">Log In</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h2>Edit Blog Post</h2>
+      <form id="edit-post-form">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required />
+
+        <label for="body">Body</label>
+        <textarea id="body" name="body" required></textarea>
+
+        <label for="tags">Tags (comma separated)</label>
+        <input type="text" id="tags" name="tags" />
+
+        <label for="image-url">Image URL</label>
+        <input type="url" id="image-url" name="image-url" />
+
+        <label for="image-alt">Image Alt Text</label>
+        <input type="text" id="image-alt" name="image-alt" />
+
+        <button type="submit">Update Post</button>
+      </form>
+
+      <div id="error-message"></div>
+    </main>
+    <footer>
+      <ul>
+        <li>
+          <a href=""><img src="/images/twitch.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/TwitterX.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/FacebookF.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/youtube.png" alt="" /></a>
+        </li>
+      </ul>
+      <p>&copy;RacingBear 2025. All rights reserved</p>
+    </footer>
+    <script src="/JS/edit.js"></script>
+  </body>
+</html>

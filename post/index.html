@@ -3,11 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link rel="stylesheet" href="/styles/post.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap"
+      rel="stylesheet"
+    />
+    <title>RacingBear - A Simracers Journey</title>
   </head>
   <body>
-    <h1>TEST</h1>
+    <header>
+      <img id="header-logo" src="/images/logo.png" alt="" />
+      <nav>
+        <ul>
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="/posts.html" class="nav-link">Blog</a></li>
+        </ul>
+        <ul id="sign-in">
+          <li><a href="/account/register.html" class="nav-link">Sign Up</a></li>
+          <li><a href="/account/login.html" class="nav-link">Log In</a></li>
+        </ul>
+      </nav>
+    </header>
 
+    <main id="post-container">
+      <div id="post-image"></div>
+      <h1 id="post-title">Loading...</h1>
+      <div id="post-author"></div>
+      <p id="post-body"></p>
+      <div id="post-tags"></div>
+    </main>
+
+    <footer>
+      <ul>
+        <li>
+          <a href=""><img src="/images/twitch.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/TwitterX.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/FacebookF.png" alt="" /></a>
+        </li>
+        <li>
+          <a href=""><img src="/images/youtube.png" alt="" /></a>
+        </li>
+      </ul>
+      <p>&copy;RacingBear 2025. All rights reserved</p>
+    </footer>
     <script src="/JS/post.js"></script>
   </body>
 </html>

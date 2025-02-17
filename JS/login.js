@@ -42,15 +42,26 @@ form.addEventListener("submit", async (event) => {
       // Successful login
       const data = await response.json();
 
-      // Store accessToken in localStorage
+      // Store the accessToken separately
       const accessToken = data.data.accessToken;
       localStorage.setItem("accessToken", accessToken);
+
+      // Store the user profile data (without accessToken)
+      const userData = {
+        name: data.data.name,
+        email: data.data.email,
+        avatar: data.data.avatar,
+        banner: data.data.banner,
+      };
+
+      // Store user profile data in localStorage
+      localStorage.setItem("userData", JSON.stringify(userData));
 
       console.log("Logged in successfully:", data);
       alert("Login successful!");
 
-      // Redirect to /post/index.html
-      window.location.href = "/account/profile.html"; // Redirects to the specified page
+      // Redirect to /account/profile.html
+      window.location.href = "/account/profile.html"; // Redirects to the profile page
     }
   } catch (error) {
     errorMessage.textContent = "An error occurred. Please try again later.";
