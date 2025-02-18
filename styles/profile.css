@@ -44,3 +44,9 @@
   height: 200px;
   margin-bottom: 20px;
 }
+
+#user-posts {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
