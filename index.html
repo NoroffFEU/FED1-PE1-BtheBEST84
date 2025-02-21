@@ -16,20 +16,25 @@
     <header>
       <img id="header-logo" src="/images/logo.png" alt="" />
       <nav>
-        <ul>
+        <div class="menu-toggle" id="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-menu" id="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="about.html" class="nav-link">About</a></li>
           <li><a href="/posts.html" class="nav-link">Blog</a></li>
         </ul>
-        <ul id="sign-in">
+        <ul id="sign-in" class="nav-menu">
           <li><a href="/account/register.html" class="nav-link">Sign Up</a></li>
           <li><a href="/account/login.html" class="nav-link">Log In</a></li>
         </ul>
       </nav>
     </header>
     <main>
-      <h1>A Simdrivers Journey</h1>
-      <img src="/images/Mazda_car 1.png" alt="" />
+      <h1 id="hero-header">A Simdrivers Journey</h1>
+      <img id="hero-picture" src="/images/Mazda_car 1.png" alt="" />
     </main>
     <footer>
       <ul>
@@ -48,5 +53,6 @@
       </ul>
       <p>&copy;RacingBear 2025. All rights reserved</p>
     </footer>
+    <script src="/JS/app.js"></script>
   </body>
 </html>
