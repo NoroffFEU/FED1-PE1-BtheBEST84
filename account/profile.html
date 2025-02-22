@@ -31,22 +31,23 @@
       </nav>
     </header>
     <main>
-      <!-- Profile info -->
       <section id="profile-info">
         <div id="avatar">
-          <img src="" alt="User Avatar" id="avatar-img" />
+          <img src="/images/profile.png" alt="User Avatar" id="avatar-img" />
         </div>
 
         <h1>Welcome, <span id="username"></span></h1>
         <p>Email: <span id="email"></span></p>
       </section>
-
-      <!-- User's posts -->
       <section id="user-posts">
         <h2>Your Posts</h2>
-        <div id="blog-container">
-          <!-- Blog posts will be displayed here -->
-        </div>
+        <button
+          id="create-post-btn"
+          onclick="location.href='/create-post.html'"
+        >
+          + Create New Post
+        </button>
+        <div id="blog-container"></div>
       </section>
     </main>
     <footer>

@@ -10,6 +10,7 @@ main {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #form {
@@ -27,8 +28,8 @@ main {
   justify-content: center;
   align-items: center;
   padding: 30px;
-  width: 400px; /* Set a fixed width */
-  min-height: 400px; /* Give a minimum height to the form */
+  width: 400px;
+  min-height: 400px;
 }
 
 label {
@@ -58,6 +59,25 @@ textarea:focus {
 textarea {
   height: 150px;
   resize: vertical;
+}
+
+.editable-div {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  background-color: #fff;
+  min-height: 150px;
+  resize: vertical;
+  overflow-y: auto;
+}
+
+.editable-div:focus,
+.editable-div:active {
+  border-color: #ff7347;
+  outline: none;
 }
 
 button {

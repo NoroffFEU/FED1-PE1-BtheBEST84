@@ -1,28 +1,24 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // Get the post ID from the URL
   const urlParams = new URLSearchParams(window.location.search);
-  const postId = urlParams.get("id"); // Fetch the post ID from the URL query params
+  const postId = urlParams.get("id");
   const accessToken = localStorage.getItem("accessToken");
 
-  // Redirect to login if no access token is found
   if (!accessToken) {
-    window.location.href = "/login.html"; // Redirect to login page if no access token
+    window.location.href = "/login.html";
     return;
   }
 
-  // Check if the post ID is valid
   if (!postId) {
     alert("Post ID is missing in the URL.");
     return;
   }
 
-  // Fetch the post data using the post ID
   try {
     const response = await fetch(
       `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`, // Pass the access token for authentication
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -34,15 +30,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const postData = await response.json();
     const post = postData.data;
 
-    // Ensure post data exists
     if (!post) {
       alert("Post not found.");
       return;
     }
 
-    // Populate the form with the current post data
     document.getElementById("title").value = post.title || "";
-    document.getElementById("body").value = post.body || "";
+
+    // Convert plain text into proper <p> wrapped paragraphs
+    const bodyContent = post.body || "";
+    document.getElementById("body").innerHTML = formatBodyText(bodyContent);
+
     document.getElementById("tags").value = post.tags
       ? post.tags.join(", ")
       : "";
@@ -53,51 +51,79 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert("An error occurred while fetching the post data.");
   }
 
-  // Handle form submission for updating the post
-  const form = document.getElementById("edit-post-form");
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
+  // Ensure Enter creates new <p> elements
+  document.getElementById("body").addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
 
-    // Gather form data
-    const updatedPostData = {
-      title: document.getElementById("title").value,
-      body: document.getElementById("body").value,
-      tags: document
-        .getElementById("tags")
-        .value.split(",")
-        .map((tag) => tag.trim()), // Split and trim tags
-      media: {
-        url: document.getElementById("image-url").value,
-        alt: document.getElementById("image-alt").value,
-      },
-    };
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
 
-    // Send PUT request to update the post
-    try {
-      const response = await fetch(
-        `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`, // Authorization header with access token
-          },
-          body: JSON.stringify(updatedPostData), // Send updated post data
-        }
-      );
+      const p = document.createElement("p");
+      p.innerHTML = "<br>"; // Empty paragraph for new text input
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        alert(errorData.message || "Failed to update the post.");
-        return;
-      }
-
-      // Post updated successfully, redirect to the profile page or other page
-      alert("Post updated successfully!");
-      window.location.href = "/account/profile.html"; // Redirect back to the profile page
-    } catch (error) {
-      console.error("Error updating post:", error);
-      alert("An error occurred while updating the post.");
+      range.insertNode(p);
+      range.setStartAfter(p);
+      range.setEndAfter(p);
+      selection.removeAllRanges();
+      selection.addRange(range);
     }
   });
+
+  document
+    .getElementById("edit-post-form")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const updatedPostData = {
+        title: document.getElementById("title").value,
+        body: document.getElementById("body").innerHTML.trim(), // Save full HTML
+        tags: document
+          .getElementById("tags")
+          .value.split(",")
+          .map((tag) => tag.trim()),
+        media: {
+          url: document.getElementById("image-url").value,
+          alt: document.getElementById("image-alt").value,
+        },
+      };
+
+      try {
+        const response = await fetch(
+          `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify(updatedPostData),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          alert(errorData.message || "Failed to update the post.");
+          return;
+        }
+
+        alert("Post updated successfully!");
+        window.location.href = "/account/profile.html";
+      } catch (error) {
+        console.error("Error updating post:", error);
+        alert("An error occurred while updating the post.");
+      }
+    });
 });
+
+// Function to wrap plain text in <p> elements
+function formatBodyText(text) {
+  // If already contains <p>, assume it's formatted correctly
+  if (text.includes("<p>")) return text;
+
+  // Otherwise, split text by double line breaks and wrap each in <p>
+  return text
+    .split(/\n\s*\n/) // Splits at empty lines
+    .map((para) => `<p>${para.trim()}</p>`) // Wrap each section in <p>
+    .join(""); // Join without extra spaces
+}

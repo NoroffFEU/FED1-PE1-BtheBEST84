@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/styles.css" />
     <link rel="stylesheet" href="/styles/posts.css" />
+    <link rel="stylesheet" href="/styles/hamburger-menu.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,21 +18,43 @@
     <header>
       <img id="header-logo" src="/images/logo.png" alt="" />
       <nav>
-        <ul>
+        <div class="menu-toggle" id="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <ul class="nav-menu" id="nav-menu">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="about.html" class="nav-link">About</a></li>
-          <li><a href="posts.html" class="nav-link">Blog</a></li>
+          <li><a href="/posts.html" class="nav-link">Blog</a></li>
         </ul>
-        <ul id="sign-in">
+        <ul id="sign-in" class="nav-menu">
           <li><a href="/account/register.html" class="nav-link">Sign Up</a></li>
           <li><a href="/account/login.html" class="nav-link">Log In</a></li>
         </ul>
+        <div class="mobile-menu" id="mobile-menu">
+          <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="/posts.html" class="nav-link">Blog</a></li>
+            <li>
+              <a href="/account/register.html" class="nav-link">Sign Up</a>
+            </li>
+            <li><a href="/account/login.html" class="nav-link">Log In</a></li>
+          </ul>
+        </div>
       </nav>
     </header>
-    <header></header>
-
     <main>
       <h1>Blog Posts</h1>
+      <div class="carousel">
+        <div class="carousel-container" id="carousel-container"></div>
+        <div class="carousel-buttons">
+          <button class="carousel-button" id="prev-button">&#10094;</button>
+          <button class="carousel-button" id="next-button">&#10095;</button>
+        </div>
+      </div>
       <div id="blog-container"></div>
     </main>
     <footer>
@@ -52,5 +75,6 @@
       <p>&copy;RacingBear 2025. All rights reserved</p>
     </footer>
     <script src="/JS/posts.js"></script>
+    <script src="/JS/app.js"></script>
   </body>
 </html>

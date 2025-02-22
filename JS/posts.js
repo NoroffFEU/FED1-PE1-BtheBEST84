@@ -15,7 +15,12 @@ async function fetchBlogPosts() {
       throw new Error("Invalid or empty data received.");
     }
 
+    // Display all blog posts in the main content area
     displayBlogPosts(data.data);
+
+    // Get the 3 latest posts for the carousel
+    const latestPosts = data.data.slice(0, 3);
+    displayCarousel(latestPosts);
   } catch (error) {
     console.error("Error fetching blog posts:", error);
     document.getElementById(
@@ -63,6 +68,49 @@ function displayBlogPosts(posts) {
     });
 
     container.appendChild(postElement);
+  });
+}
+
+// Function to display carousel with latest posts
+function displayCarousel(posts) {
+  const carouselContainer = document.getElementById("carousel-container");
+  carouselContainer.innerHTML = ""; // Clear carousel before adding new posts
+
+  posts.forEach((post) => {
+    const carouselItem = document.createElement("div");
+    carouselItem.classList.add("carousel-item");
+    carouselItem.innerHTML = `
+      <a href="/post?id=${post.id}">
+        <img src="${post.media?.url}" alt="${post.media?.alt}" />
+        <div class="carousel-caption">
+          <h2>${post.title}</h2>
+        </div>
+      </a>
+    `;
+    carouselContainer.appendChild(carouselItem);
+  });
+
+  // Initialize carousel functionality
+  let currentIndex = 0;
+  const totalPosts = posts.length;
+  const prevButton = document.getElementById("prev-button");
+  const nextButton = document.getElementById("next-button");
+
+  function updateCarousel() {
+    const offset = -currentIndex * 100;
+    document.getElementById(
+      "carousel-container"
+    ).style.transform = `translateX(${offset}%)`;
+  }
+
+  prevButton.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + totalPosts) % totalPosts;
+    updateCarousel();
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % totalPosts;
+    updateCarousel();
   });
 }
 

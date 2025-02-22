@@ -78,7 +78,7 @@ h1 {
 
 #header-logo {
   align-items: center;
-  width: 30%;
+  width: 40%;
   margin: 20px 0px 20px 0px;
 }
 
@@ -106,33 +106,13 @@ h1 {
 }
 
 @media (max-width: 768px) {
-  .nav-menu {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-    background: #444;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    padding: 10px 0;
-  }
-
-  .nav-menu.active {
-    display: flex;
-  }
-
-  .menu-toggle {
-    display: flex;
-  }
-
-  #hero-header {
-    font-size: 3em;
-  }
-}
-
-@media (max-width: 500px) {
   #hero-header {
     font-size: 2em;
+  }
+  #header-logo {
+    width: 350px;
+  }
+  ul {
+    width: 60%;
   }
 }

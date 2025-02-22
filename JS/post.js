@@ -27,8 +27,10 @@ async function fetchSinglePost() {
 
     document.getElementById("post-title").textContent = postData.title;
 
-    document.getElementById("post-body").textContent =
-      postData.body || "No content available.";
+    // Format the body to wrap paragraphs correctly
+    document.getElementById("post-body").innerHTML = formatBodyText(
+      postData.body || "No content available."
+    );
 
     if (postData.media?.url) {
       const imgElement = document.createElement("img");
@@ -51,24 +53,33 @@ async function fetchSinglePost() {
     const authorContainer = document.getElementById("post-author");
     if (postData.author) {
       authorContainer.innerHTML = `
-                <div class="author-info">
-                    ${
-                      postData.author.avatar?.url
-                        ? `<img src="${postData.author.avatar.url}" alt="${postData.author.avatar.alt}" class="author-avatar">`
-                        : ""
-                    }
-                    <h3>${postData.author.name || "Unknown Author"}</h3>
-                        <p>${postData.author.bio || ""}</p>
-                    <div>
-                        
-                    </div>
-                </div>
-            `;
+        <div class="author-info">
+          ${
+            postData.author.avatar?.url
+              ? `<img src="${postData.author.avatar.url}" alt="${postData.author.avatar.alt}" class="author-avatar">`
+              : ""
+          }
+          <h3>${postData.author.name || "Unknown Author"}</h3>
+          <p>${postData.author.bio || ""}</p>
+        </div>
+      `;
     }
   } catch (error) {
     console.error("Error fetching blog post:", error);
     document.body.innerHTML = "<p>Failed to load blog post.</p>";
   }
+}
+
+// Function to format post body with <p> tags
+function formatBodyText(text) {
+  // If already formatted with <p>, return as is
+  if (text.includes("<p>")) return text;
+
+  // Split text at double line breaks and wrap each paragraph in <p>
+  return text
+    .split(/\n\s*\n/) // Splits at empty lines
+    .map((para) => `<p>${para.trim()}</p>`)
+    .join(""); // Join formatted paragraphs
 }
 
 // Call function to fetch the post

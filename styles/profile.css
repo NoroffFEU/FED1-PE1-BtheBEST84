@@ -50,3 +50,12 @@
   align-items: center;
   flex-direction: column;
 }
+
+#create-post-btn {
+  font-family: inherit;
+  font-size: 36px;
+  background-color: #ff7347;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 50px;
+}

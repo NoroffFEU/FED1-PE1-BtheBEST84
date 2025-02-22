@@ -12,13 +12,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("username").textContent = userData.name;
   document.getElementById("email").textContent = userData.email;
 
-  const avatarImg = document.getElementById("avatar-img");
+  /* const avatarImg = document.getElementById("avatar-img");
   if (userData.avatar?.url) {
     avatarImg.src = userData.avatar.url;
     avatarImg.alt = userData.avatar.alt || "User avatar";
   } else {
     avatarImg.style.display = "none";
-  }
+  } */
 
   try {
     const response = await fetch(
