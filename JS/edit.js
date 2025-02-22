@@ -10,10 +10,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  if (!postId) {
-    alert("Post ID is missing in the URL.");
-    return;
-  }
+  // Get modal elements
+  const successModal = document.getElementById("success-modal");
+  const successMessage = document.getElementById("success-message");
+  const closeSuccessModal = document.getElementById("close-success-modal");
+
+  const deleteModal = document.getElementById("delete-modal");
+  const deleteMessage = document.getElementById("delete-message");
+  const cancelDelete = document.getElementById("cancel-delete");
+  const confirmDelete = document.getElementById("confirm-delete");
 
   try {
     const response = await fetch(
@@ -38,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.getElementById("title").value = post.title || "";
-    document.getElementById("body").innerHTML = formatBodyText(post.body || ""); // Ensure correct paragraph formatting
+    document.getElementById("body").innerHTML = formatBodyText(post.body || "");
     document.getElementById("tags").value = post.tags
       ? post.tags.join(", ")
       : "";
@@ -48,46 +53,56 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Handle "Delete Post" button click
     document
       .getElementById("delete-post-button")
-      .addEventListener("click", async () => {
-        const confirmDelete = confirm(
-          "Are you sure you want to delete this post?"
-        );
-        if (!confirmDelete) return;
-
-        try {
-          const deleteResponse = await fetch(
-            `https://v2.api.noroff.dev/blog/posts/${userName}/${postId}`,
-            {
-              method: "DELETE",
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
-
-          if (!deleteResponse.ok) {
-            throw new Error("Failed to delete the post");
-          }
-
-          alert("Post deleted successfully!");
-          window.location.href = "/account/profile.html"; // Redirect to the profile page
-        } catch (error) {
-          console.error("Error deleting post:", error);
-          alert("An error occurred while deleting the post.");
-        }
+      .addEventListener("click", () => {
+        deleteMessage.textContent =
+          "Are you sure you want to delete this post?";
+        deleteModal.style.display = "flex";
       });
+
+    // Cancel delete action
+    cancelDelete.addEventListener("click", () => {
+      deleteModal.style.display = "none";
+    });
+
+    // Confirm delete action
+    confirmDelete.addEventListener("click", async () => {
+      try {
+        const deleteResponse = await fetch(
+          `https://v2.api.noroff.dev/blog/posts/${userName}/${postId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        if (!deleteResponse.ok) {
+          throw new Error("Failed to delete the post");
+        }
+
+        deleteModal.style.display = "none";
+        successMessage.textContent = "Post deleted successfully!";
+        successModal.style.display = "flex";
+
+        // Redirect after showing modal
+        setTimeout(() => {
+          window.location.href = "/account/profile.html";
+        }, 1500);
+      } catch (error) {
+        console.error("Error deleting post:", error);
+        alert("An error occurred while deleting the post.");
+      }
+    });
 
     // Ensure Enter creates new <p> elements in the editable div
     document.getElementById("body").addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
-
         const selection = window.getSelection();
         const range = selection.getRangeAt(0);
-
         const p = document.createElement("p");
         p.innerHTML = "<br>"; // Empty paragraph for new text input
-
         range.insertNode(p);
         range.setStartAfter(p);
         range.setEndAfter(p);
@@ -104,7 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const updatedPostData = {
           title: document.getElementById("title").value,
-          body: formatBodyText(document.getElementById("body").innerText), // Converts text with line breaks into paragraphs
+          body: formatBodyText(document.getElementById("body").innerText),
           tags: document
             .getElementById("tags")
             .value.split(",")
@@ -134,8 +149,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
           }
 
-          alert("Post updated successfully!");
-          window.location.href = "/account/profile.html";
+          successMessage.textContent = "Post updated successfully!";
+          successModal.style.display = "flex";
+
+          // Redirect after showing modal
+          setTimeout(() => {
+            window.location.href = "/account/profile.html";
+          }, 1500);
         } catch (error) {
           console.error("Error updating post:", error);
           alert("An error occurred while updating the post.");
@@ -150,7 +170,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Function to ensure every line break creates a new paragraph <p>
 function formatBodyText(text) {
   return text
-    .split(/\n+/) // Split at every new line
-    .map((line) => `<p>${line.trim()}</p>`) // Wrap each line in a <p> tag
-    .join(""); // Join them together without extra spaces
+    .split(/\n+/)
+    .map((line) => `<p>${line.trim()}</p>`)
+    .join("");
 }
+
+// Close modals on click
+closeSuccessModal.addEventListener("click", () => {
+  successModal.style.display = "none";
+  window.location.href = "/account/profile.html";
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target === successModal) {
+    successModal.style.display = "none";
+    window.location.href = "/account/profile.html";
+  }
+  if (event.target === deleteModal) {
+    deleteModal.style.display = "none";
+  }
+});

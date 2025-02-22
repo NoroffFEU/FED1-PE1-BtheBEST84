@@ -12,7 +12,6 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
-  font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 45px;
 }
 
@@ -86,6 +85,7 @@ button {
   cursor: pointer;
   font-size: 1.2em;
   margin-top: 20px;
+  -webkit
 }
 
 button:hover {
@@ -98,4 +98,25 @@ button:hover {
   -webkit-text-stroke: 0.5px black;
   font-size: 1.2em;
   text-align: center;
+}
+
+/* Close and Delete Buttons */
+#close-modal,
+#cancel,
+#confirm {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#close-modal,
+#cancel {
+  background-color: #ccc;
+  color: black;
+}
+
+#confirm {
+  background-color: #ff5722;
+  color: white;
 }

@@ -24,44 +24,70 @@ document.addEventListener("DOMContentLoaded", () => {
   // Check if there is user data in localStorage
   const userData = JSON.parse(localStorage.getItem("userData"));
 
-  // Get the login/logout and register/profile links for both desktop and mobile menus
+  // Get login/logout and register/profile links
   const loginLogoutLinks = document.querySelectorAll(".login-logout");
   const registerProfileLinks = document.querySelectorAll(".register-profile");
 
+  // Get logout modal elements
+  const logoutModal = document.getElementById("logout-modal");
+  const logoutMessage = document.getElementById("logout-message");
+  const confirmLogoutButton = document.getElementById("confirm");
+  const cancelLogoutButton = document.getElementById("cancel");
+
   if (userData) {
-    // Extract username
     const username = userData.name;
 
-    // Update all login/logout links to "Log Out"
+    // Update login/logout links to "Log Out"
     loginLogoutLinks.forEach((link) => {
       link.textContent = "Log Out";
-      link.href = "#"; // Don't navigate away
-      link.addEventListener("click", () => {
-        // Clear userData from localStorage
-        localStorage.removeItem("userData");
-        localStorage.removeItem("accessToken");
+      link.href = "#"; // Prevent navigation
 
-        // Redirect to home screen
-        window.location.href = "/index.html";
+      link.addEventListener("click", () => {
+        logoutMessage.textContent = "Are you sure you want to log out?";
+        logoutModal.style.display = "flex";
       });
     });
 
-    // Update all register/profile links to show username with an icon
+    // Update register/profile links to show username with profile icon
     registerProfileLinks.forEach((link) => {
       link.innerHTML = `<span class="material-icons">account_circle</span> ${username}`;
-      link.href = "/account/profile.html"; // Link to profile page
+      link.href = "/account/profile.html";
     });
   } else {
-    // If no user data, set login/logout to "Log In" and link to login page
+    // If no user is logged in, reset links
     loginLogoutLinks.forEach((link) => {
       link.textContent = "Log In";
       link.href = "/account/login.html";
     });
 
-    // Set register/profile to "Sign Up" and link to register page
     registerProfileLinks.forEach((link) => {
       link.textContent = "Sign Up";
       link.href = "/account/register.html";
     });
   }
+
+  // Handle logout confirmation
+  confirmLogoutButton.addEventListener("click", () => {
+    localStorage.removeItem("userData");
+    localStorage.removeItem("accessToken");
+
+    logoutModal.style.display = "none";
+
+    // Show confirmation before redirecting
+    setTimeout(() => {
+      window.location.href = "/index.html";
+    }, 1000);
+  });
+
+  // Cancel logout
+  cancelLogoutButton.addEventListener("click", () => {
+    logoutModal.style.display = "none";
+  });
+
+  // Close modal if clicking outside
+  window.addEventListener("click", (event) => {
+    if (event.target === logoutModal) {
+      logoutModal.style.display = "none";
+    }
+  });
 });

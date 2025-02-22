@@ -58,4 +58,10 @@
   color: white;
   border-radius: 10px;
   margin-bottom: 50px;
+  -webkit-text-stroke: 1px black;
+}
+
+#create-post-btn:hover {
+  background-color: #00c2bc;
+  cursor: pointer;
 }

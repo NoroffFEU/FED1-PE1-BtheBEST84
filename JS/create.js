@@ -1,13 +1,17 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const accessToken = localStorage.getItem("accessToken");
+document.addEventListener("DOMContentLoaded", () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST
+  const accessToken = localStorage.getItem("accessToken");
 
-  // Redirect to login page access token is missing from localStorage
   if (!accessToken) {
-    window.location.href = "/login.html";
+    window.location.href = "/login.html"; // Redirect if not logged in
     return;
   }
+
+  // Get modal elements
+  const successModal = document.getElementById("success-modal");
+  const successMessage = document.getElementById("success-message");
+  const closeModal = document.getElementById("close-modal");
 
   document
     .getElementById("edit-post-form")
@@ -49,19 +53,34 @@ document.addEventListener("DOMContentLoaded", async () => {
           return;
         }
 
-        alert("Post created successfully!");
-        window.location.href = "/account/profile.html";
+        // Show modal only when post creation is successful
+        successMessage.textContent = "Post created successfully!";
+        successModal.style.display = "flex";
       } catch (error) {
         document.getElementById("error-message").textContent =
           "An error occurred while creating the post.";
       }
     });
+
+  // Close modal when clicking the close button
+  closeModal.addEventListener("click", () => {
+    successModal.style.display = "none";
+    window.location.href = "/account/profile.html"; // Redirect to profile after closing modal
+  });
+
+  // Close modal if user clicks outside of it
+  window.addEventListener("click", (event) => {
+    if (event.target === successModal) {
+      successModal.style.display = "none";
+      window.location.href = "/account/profile.html";
+    }
+  });
 });
 
-// Creating a function so that a new line creates a new paragraph
+// Function to format body text so that each line break creates a new paragraph <p>
 function formatBodyText(text) {
   return text
-    .split(/\n+/) // This splits it at each line
-    .map((line) => `<p>${line.trim()}</p>`) // Trim and wrap each line in a <p>
-    .join(""); // Join them together without the extra space
+    .split(/\n+/) // Split at each new line
+    .map((line) => `<p>${line.trim()}</p>`) // Wrap each line in <p>
+    .join(""); // Join them together without extra spaces
 }

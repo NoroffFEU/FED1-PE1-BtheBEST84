@@ -8,9 +8,6 @@ const errorMessage = document.getElementById("error-message");
 const loginModal = document.getElementById("login-modal");
 const closeModalButton = document.getElementById("close-modal");
 
-// Hide the modal initially
-loginModal.style.display = "none";
-
 // Add submit event listener to the form
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
