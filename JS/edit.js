@@ -36,11 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.getElementById("title").value = post.title || "";
-
-    // Convert plain text into proper <p> wrapped paragraphs
-    const bodyContent = post.body || "";
-    document.getElementById("body").innerHTML = formatBodyText(bodyContent);
-
+    document.getElementById("body").innerHTML = formatBodyText(post.body || ""); // Ensures correct paragraph formatting
     document.getElementById("tags").value = post.tags
       ? post.tags.join(", ")
       : "";
@@ -78,85 +74,81 @@ document.addEventListener("DOMContentLoaded", async () => {
           alert("An error occurred while deleting the post.");
         }
       });
+
+    // Ensure Enter creates new <p> elements in the editable div
+    document.getElementById("body").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
+
+        const p = document.createElement("p");
+        p.innerHTML = "<br>"; // Empty paragraph for new text input
+
+        range.insertNode(p);
+        range.setStartAfter(p);
+        range.setEndAfter(p);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    });
+
+    // Update post form submission (PUT request)
+    document
+      .getElementById("edit-post-form")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const updatedPostData = {
+          title: document.getElementById("title").value,
+          body: formatBodyText(document.getElementById("body").innerText), // Converts text with line breaks into paragraphs
+          tags: document
+            .getElementById("tags")
+            .value.split(",")
+            .map((tag) => tag.trim()),
+          media: {
+            url: document.getElementById("image-url").value,
+            alt: document.getElementById("image-alt").value,
+          },
+        };
+
+        try {
+          const response = await fetch(
+            `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+              },
+              body: JSON.stringify(updatedPostData),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            alert(errorData.message || "Failed to update the post.");
+            return;
+          }
+
+          alert("Post updated successfully!");
+          window.location.href = "/account/profile.html";
+        } catch (error) {
+          console.error("Error updating post:", error);
+          alert("An error occurred while updating the post.");
+        }
+      });
   } catch (error) {
     console.error("Error fetching post:", error);
     alert("An error occurred while fetching the post data.");
   }
-
-  // Ensure Enter creates new <p> elements
-  document.getElementById("body").addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
-
-      const p = document.createElement("p");
-      p.innerHTML = "<br>"; // Empty paragraph for new text input
-
-      range.insertNode(p);
-      range.setStartAfter(p);
-      range.setEndAfter(p);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-  });
-
-  // Update post form submission (PUT request)
-  document
-    .getElementById("edit-post-form")
-    .addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const updatedPostData = {
-        title: document.getElementById("title").value,
-        body: document.getElementById("body").innerHTML.trim(), // Save full HTML
-        tags: document
-          .getElementById("tags")
-          .value.split(",")
-          .map((tag) => tag.trim()),
-        media: {
-          url: document.getElementById("image-url").value,
-          alt: document.getElementById("image-alt").value,
-        },
-      };
-
-      try {
-        const response = await fetch(
-          `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(updatedPostData),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          alert(errorData.message || "Failed to update the post.");
-          return;
-        }
-
-        alert("Post updated successfully!");
-        window.location.href = "/account/profile.html";
-      } catch (error) {
-        console.error("Error updating post:", error);
-        alert("An error occurred while updating the post.");
-      }
-    });
 });
 
-// Function to wrap plain text in <p> elements
+// Function to ensure every line break creates a new paragraph <p>
 function formatBodyText(text) {
-  // If already contains <p>, assume it's formatted correctly
-  if (text.includes("<p>")) return text;
-
-  // Otherwise, split text by double line breaks and wrap each in <p>
   return text
-    .split(/\n\s*\n/) // Splits at empty lines
-    .map((para) => `<p>${para.trim()}</p>`) // Wrap each section in <p>
-    .join(""); // Join without extra spaces
+    .split(/\n+/) // Split at every new line
+    .map((line) => `<p>${line.trim()}</p>`) // Wrap each line in a <p> tag
+    .join(""); // Join all paragraphs into one string
 }

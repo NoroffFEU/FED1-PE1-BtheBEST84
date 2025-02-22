@@ -44,7 +44,7 @@ async function fetchSinglePost() {
     // Create tags
     const tagsContainer = document.getElementById("post-tags");
     if (postData.tags?.length) {
-      tagsContainer.innerHTML = `<div class="tags">Tags: ${postData.tags.join(
+      tagsContainer.innerHTML = `<div class="tags">${postData.tags.join(
         ", "
       )}</div>`;
     }

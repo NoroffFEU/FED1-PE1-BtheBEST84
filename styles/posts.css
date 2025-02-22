@@ -4,11 +4,12 @@
   gap: 20px;
   justify-content: center;
   width: 80%;
-  max-width: 1200px;
   margin-bottom: 50px;
 }
 
 .blog-post {
+  display: flex;
+  flex-direction: column;
   background: white;
   padding: 20px;
   border-radius: 12px;
@@ -31,7 +32,7 @@
 
 .blog-post img {
   max-width: 100%;
-  height: auto;
+  max-height: 400px;
   border-radius: 8px;
   margin: 10px 0;
 }
@@ -144,4 +145,24 @@
 
 #next-button {
   right: 10px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+}
+
+.pagination-button {
+  background: none;
+  border: none;
+  font-size: 50px;
+  font-family: inherit;
+  -webkit-text-stroke: 0.5px white;
+}
+.pagination-button.active {
+  background-color: #ff7347;
+  border-radius: 100%;
+  padding: 0 20px;
 }

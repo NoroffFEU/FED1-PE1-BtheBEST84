@@ -8,6 +8,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 100vh;
 }
@@ -38,6 +39,7 @@ footer {
   align-items: center;
   border-top: 1px solid #f3ec2f;
   -webkit-text-stroke: 0.5px white;
+  margin-top: 30px;
 }
 
 nav {
@@ -62,6 +64,11 @@ h1 {
   font-size: 72px;
   -webkit-text-stroke: 0.5px white;
   margin: 20px 0px;
+}
+
+h2 {
+  -webkit-text-stroke: 0.5px white;
+  font-size: 2em;
 }
 
 .nav-link {

@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("userData");
 
         // Redirect to home screen
-        window.location.href = "index.html";
+        window.location.href = "/index.html";
       });
     });
 

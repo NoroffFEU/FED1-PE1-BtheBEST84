@@ -12,13 +12,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("username").textContent = userData.name;
   document.getElementById("email").textContent = userData.email;
 
-  /* const avatarImg = document.getElementById("avatar-img");
-  if (userData.avatar?.url) {
-    avatarImg.src = userData.avatar.url;
-    avatarImg.alt = userData.avatar.alt || "User avatar";
-  } else {
-    avatarImg.style.display = "none";
-  } */
+  // Hide "Create New Post" button if the user is not "BtheBEST"
+  const createPostButton = document.getElementById("create-post-button");
+  if (userName !== "BtheBEST" && createPostButton) {
+    createPostButton.style.display = "none";
+  }
 
   try {
     const response = await fetch(
@@ -35,10 +33,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const postsData = await response.json();
+    const blogContainer = document.getElementById("blog-container");
 
     if (postsData.data.length > 0) {
-      const blogContainer = document.getElementById("blog-container");
-
       postsData.data.forEach((post) => {
         const postElement = document.createElement("div");
         postElement.classList.add("blog-post");
@@ -55,7 +52,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           postImage.onerror = () => {
             postImage.style.display = "none";
           };
-
           postElement.appendChild(postImage);
         }
 
@@ -71,12 +67,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         postElement.appendChild(postTitle);
         postElement.appendChild(postBody);
 
+        // Handle tags
         if (post.tags && post.tags.length > 0) {
           const tagsElement = document.createElement("div");
           tagsElement.classList.add("tags");
           tagsElement.textContent = post.tags.join(", ");
 
-          // Hide tag element if it somehow ends up empty
           if (!tagsElement.textContent.trim()) {
             tagsElement.style.display = "none";
           } else {
@@ -94,8 +90,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     } else {
       const noPostsMessage = document.createElement("p");
-      noPostsMessage.textContent = "No posts available.";
-      document.getElementById("blog-container").appendChild(noPostsMessage);
+      noPostsMessage.textContent =
+        userName !== "BtheBEST"
+          ? "You are not a content manager on this site."
+          : "No posts available.";
+      blogContainer.appendChild(noPostsMessage);
     }
   } catch (error) {
     console.error("Error fetching posts:", error);

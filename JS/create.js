@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      // Get form values
+      // Get form values and ensure line breaks create new paragraphs
       const newPostData = {
         title: document.getElementById("title").value,
-        body: document.getElementById("body").innerHTML.trim(), // Save full HTML from editable div
+        body: formatBodyText(document.getElementById("body").innerText), // Convert plain text into <p> wrapped HTML
         tags: document
           .getElementById("tags")
           .value.split(",")
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!response.ok) {
           const errorData = await response.json();
           document.getElementById("error-message").textContent =
-            errorData.message || "Failed to create the post.";
+            errorData.message || "Not authorized to create a post.";
           return;
         }
 
@@ -56,3 +56,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 });
+
+// Function to format text so that each line becomes a new paragraph <p>
+function formatBodyText(text) {
+  return text
+    .split(/\n+/) // Split at each new line
+    .map((line) => `<p>${line.trim()}</p>`) // Wrap each line in <p>
+    .join(""); // Join them together without extra spaces
+}
