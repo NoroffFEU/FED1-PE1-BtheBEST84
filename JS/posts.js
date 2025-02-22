@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         <p>${
           post.body ? truncateText(post.body, 100) : "No content available."
-        }</p>
+        }</p><p id="read-more">Read more</p>
         ${
           post.tags?.length
             ? `<div class="tags">${post.tags.join(", ")}</div>`

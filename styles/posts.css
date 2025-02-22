@@ -7,6 +7,21 @@
   margin-bottom: 50px;
 }
 
+#read-more {
+  font-size: 24px;
+  font-weight: 800;
+  color: white;
+  background-color: #ff7347;
+  width: 120px;
+  padding: 0 15px;
+  border-radius: 15px;
+  -webkit-text-stroke: 0.1px black;
+}
+
+#read-more:hover {
+  cursor: pointer;
+}
+
 .blog-post {
   display: flex;
   flex-direction: column;
@@ -27,7 +42,7 @@
   color: #ff7347;
   font-size: 28px;
   margin-bottom: 10px;
-  -webkit-text-stroke: 0.1px black;
+  -webkit-text-stroke: 0.5px black;
 }
 
 .blog-post img {
@@ -51,6 +66,7 @@
   padding: 5px 10px;
   border-radius: 8px;
   display: inline-block;
+  -webkit-text-stroke: 0.5px black;
 }
 .author-info {
   display: flex;
