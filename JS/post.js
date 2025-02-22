@@ -13,9 +13,13 @@ async function fetchSinglePost() {
     return;
   }
 
+  // Retrieve the logged-in user's name, default to "BtheBEST" if not logged in
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userName = userData?.name || "BtheBEST";
+
   try {
     const response = await fetch(
-      `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`
+      `https://v2.api.noroff.dev/blog/posts/${userName}/${postId}`
     );
 
     if (!response.ok) {
@@ -75,9 +79,9 @@ function formatBodyText(text) {
   // If already formatted with <p>, return as is
   if (text.includes("<p>")) return text;
 
-  // Split text at double line breaks and wrap each paragraph in <p>
+  // Split text at line breaks and wrap each paragraph in <p>
   return text
-    .split(/\n\s*\n/) // Splits at empty lines
+    .split(/\n+/) // Splits at each new line
     .map((para) => `<p>${para.trim()}</p>`)
     .join(""); // Join formatted paragraphs
 }

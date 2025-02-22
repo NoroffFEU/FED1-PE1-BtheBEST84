@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST
 
+  let currentPage = 1;
+  const postsPerPage = 12;
+  let allPosts = [];
+
   try {
     const response = await fetch(
       `https://v2.api.noroff.dev/blog/posts/${userName}`
@@ -17,11 +21,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("Invalid or empty data received.");
     }
 
-    // Display all blog posts in the main content area
-    displayBlogPosts(data.data);
+    allPosts = data.data; // Store all posts
+    displayPaginatedPosts(); // Show posts for the first page
 
     // Get the 3 latest posts for the carousel
-    const latestPosts = data.data.slice(0, 3);
+    const latestPosts = allPosts.slice(0, 3);
     displayCarousel(latestPosts);
   } catch (error) {
     console.error("Error fetching blog posts:", error);
@@ -29,48 +33,97 @@ document.addEventListener("DOMContentLoaded", async () => {
       "blog-container"
     ).innerHTML = `<p>Failed to load blog posts.</p>`;
   }
+
+  function displayPaginatedPosts() {
+    const container = document.getElementById("blog-container");
+    container.innerHTML = ""; // Clear container before adding new posts
+
+    const startIndex = (currentPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const postsToDisplay = allPosts.slice(startIndex, endIndex);
+
+    postsToDisplay.forEach((post) => {
+      const postElement = document.createElement("div");
+      postElement.classList.add("blog-post");
+
+      postElement.innerHTML = `
+        <h2>${post.title}</h2>
+        ${
+          post.media?.url
+            ? `<img src="${post.media.url}" alt="${
+                post.media.alt || "Blog image"
+              }" onerror="this.style.display='none';">`
+            : ""
+        }
+        <p>${
+          post.body ? truncateText(post.body, 100) : "No content available."
+        }</p>
+        ${
+          post.tags?.length
+            ? `<div class="tags">${post.tags.join(", ")}</div>`
+            : ""
+        }
+      `;
+
+      // Add click event to redirect to post page
+      postElement.addEventListener("click", () => {
+        window.location.href = `/post/index.html?id=${post.id}`;
+      });
+
+      container.appendChild(postElement);
+    });
+
+    updatePaginationButtons();
+  }
+
+  function updatePaginationButtons() {
+    const paginationContainer = document.getElementById("pagination");
+    paginationContainer.innerHTML = ""; // Clear old buttons
+
+    if (allPosts.length > postsPerPage) {
+      if (currentPage > 1) {
+        const prevButton = document.createElement("button");
+        prevButton.textContent = "<";
+        prevButton.classList.add("pagination-button");
+        prevButton.addEventListener("click", () => {
+          currentPage--;
+          displayPaginatedPosts();
+        });
+        paginationContainer.appendChild(prevButton);
+      }
+
+      const totalPages = Math.ceil(allPosts.length / postsPerPage);
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement("button");
+        pageButton.textContent = i;
+        pageButton.classList.add("pagination-button");
+        if (i === currentPage) {
+          pageButton.classList.add("active");
+        }
+        pageButton.addEventListener("click", () => {
+          currentPage = i;
+          displayPaginatedPosts();
+        });
+        paginationContainer.appendChild(pageButton);
+      }
+
+      if (currentPage * postsPerPage < allPosts.length) {
+        const nextButton = document.createElement("button");
+        nextButton.textContent = ">";
+        nextButton.classList.add("pagination-button");
+        nextButton.addEventListener("click", () => {
+          currentPage++;
+          displayPaginatedPosts();
+        });
+        paginationContainer.appendChild(nextButton);
+      }
+    }
+  }
 });
 
 // Function to truncate text to a specific length
 function truncateText(text, maxLength) {
   return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-}
-
-// Function to display multiple blog posts
-function displayBlogPosts(posts) {
-  const container = document.getElementById("blog-container");
-  container.innerHTML = ""; // Clear container before adding new posts
-
-  posts.forEach((post) => {
-    const postElement = document.createElement("div");
-    postElement.classList.add("blog-post");
-
-    postElement.innerHTML = `
-      <h2>${post.title}</h2>
-      ${
-        post.media?.url
-          ? `<img src="${post.media.url}" alt="${
-              post.media.alt || "Blog image"
-            }" onerror="this.style.display='none';">`
-          : ""
-      }
-      <p>${
-        post.body ? truncateText(post.body, 100) : "No content available."
-      }</p>
-      ${
-        post.tags?.length
-          ? `<div class="tags">${post.tags.join(", ")}</div>`
-          : ""
-      }
-    `;
-
-    // Add click event to redirect to post page
-    postElement.addEventListener("click", () => {
-      window.location.href = `/post/index.html?id=${post.id}`;
-    });
-
-    container.appendChild(postElement);
-  });
 }
 
 // Function to display carousel with latest posts
@@ -139,6 +192,3 @@ function displayCarousel(posts) {
     }
   });
 }
-
-// Call the function to fetch and display blog posts
-fetchBlogPosts();
