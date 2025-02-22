@@ -60,7 +60,7 @@ async function fetchSinglePost() {
         <div class="author-info">
           ${
             postData.author.avatar?.url
-              ? `<img src="${postData.author.avatar.url}" alt="${postData.author.avatar.alt}" class="author-avatar">`
+              ? `<img src="/images/profile.png" alt="Avatar" class="author-avatar">`
               : ""
           }
           <h3>${postData.author.name || "Unknown Author"}</h3>

@@ -3,7 +3,7 @@ form {
   flex-direction: column;
   gap: 10px;
   max-width: 400px;
-  width: 100%;
+  width: 90%;
   padding: 20px;
   background: white;
   border-radius: 8px;
@@ -13,7 +13,7 @@ form {
 input,
 textarea,
 button {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;

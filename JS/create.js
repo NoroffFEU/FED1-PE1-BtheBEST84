@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST
 
-  // Redirect to login page if no access token
+  // Redirect to login page access token is missing from localStorage
   if (!accessToken) {
     window.location.href = "/login.html";
     return;
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Get form values and format body text
       const newPostData = {
         title: document.getElementById("title").value,
-        body: formatBodyText(document.getElementById("body").innerText), // Convert plain text into <p> wrapped HTML
+        body: formatBodyText(document.getElementById("body").innerText),
         tags: document
           .getElementById("tags")
           .value.split(",")
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       try {
         // Send POST request to create the new post
         const response = await fetch(
-          `https://v2.api.noroff.dev/blog/posts/${userName}`, // Dynamic userName in endpoint
+          `https://v2.api.noroff.dev/blog/posts/${userName}`,
           {
             method: "POST",
             headers: {
@@ -45,24 +45,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!response.ok) {
           const errorData = await response.json();
           document.getElementById("error-message").textContent =
-            errorData.message || "Not authorized to create a post.";
+            errorData.message || "Error creating the post";
           return;
         }
 
         alert("Post created successfully!");
         window.location.href = "/account/profile.html";
       } catch (error) {
-        console.error("Error creating post:", error);
         document.getElementById("error-message").textContent =
           "An error occurred while creating the post.";
       }
     });
 });
 
-// Function to format text so that each line becomes a new paragraph <p>
+// Creating a function so that a new line creates a new paragraph
 function formatBodyText(text) {
   return text
-    .split(/\n+/) // Split at each new line
-    .map((line) => `<p>${line.trim()}</p>`) // Wrap each line in <p>
-    .join(""); // Join them together without extra spaces
+    .split(/\n+/) // This splits it at each line
+    .map((line) => `<p>${line.trim()}</p>`) // Trim and wrap each line in a <p>
+    .join(""); // Join them together without the extra space
 }

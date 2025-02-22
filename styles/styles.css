@@ -19,6 +19,7 @@ header {
   flex-direction: column;
   width: 100%;
   min-height: 50px;
+  margin-bottom: 20px;
 }
 
 main {
