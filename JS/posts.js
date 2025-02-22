@@ -44,23 +44,23 @@ function displayBlogPosts(posts) {
     postElement.classList.add("blog-post");
 
     postElement.innerHTML = `
-            <h2>${post.title}</h2>
-            ${
-              post.media?.url
-                ? `<img src="${post.media.url}" alt="${
-                    post.media.alt || "Blog image"
-                  }" onerror="this.style.display='none';">`
-                : ""
-            }
-            <p>${
-              post.body ? truncateText(post.body, 100) : "No content available."
-            }</p>
-            ${
-              post.tags?.length
-                ? `<div class="tags">Tags: ${post.tags.join(", ")}</div>`
-                : ""
-            }
-        `;
+      <h2>${post.title}</h2>
+      ${
+        post.media?.url
+          ? `<img src="${post.media.url}" alt="${
+              post.media.alt || "Blog image"
+            }" onerror="this.style.display='none';">`
+          : ""
+      }
+      <p>${
+        post.body ? truncateText(post.body, 100) : "No content available."
+      }</p>
+      ${
+        post.tags?.length
+          ? `<div class="tags">Tags: ${post.tags.join(", ")}</div>`
+          : ""
+      }
+    `;
 
     // Add click event to redirect to post page
     postElement.addEventListener("click", () => {
@@ -72,6 +72,7 @@ function displayBlogPosts(posts) {
 }
 
 // Function to display carousel with latest posts
+// Function to display carousel with latest posts
 function displayCarousel(posts) {
   const carouselContainer = document.getElementById("carousel-container");
   carouselContainer.innerHTML = ""; // Clear carousel before adding new posts
@@ -80,7 +81,7 @@ function displayCarousel(posts) {
     const carouselItem = document.createElement("div");
     carouselItem.classList.add("carousel-item");
     carouselItem.innerHTML = `
-      <a href="/post?id=${post.id}">
+      <a href="/post/index.html?id=${post.id}"> <!-- Correct URL format with query param -->
         <img src="${post.media?.url}" alt="${post.media?.alt}" />
         <div class="carousel-caption">
           <h2>${post.title}</h2>
@@ -111,6 +112,30 @@ function displayCarousel(posts) {
   nextButton.addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % totalPosts;
     updateCarousel();
+  });
+
+  // Swipe functionality for mobile devices
+  let startX = 0;
+  let endX = 0;
+
+  carouselContainer.addEventListener("touchstart", (event) => {
+    startX = event.touches[0].clientX;
+  });
+
+  carouselContainer.addEventListener("touchmove", (event) => {
+    endX = event.touches[0].clientX;
+  });
+
+  carouselContainer.addEventListener("touchend", () => {
+    if (startX > endX + 30) {
+      // Swipe left
+      currentIndex = (currentIndex + 1) % totalPosts;
+      updateCarousel();
+    } else if (startX < endX - 30) {
+      // Swipe right
+      currentIndex = (currentIndex - 1 + totalPosts) % totalPosts;
+      updateCarousel();
+    }
   });
 }
 

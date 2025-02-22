@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/styles.css" />
-    <link rel="stylesheet" href="/styles/edit.css" />
+    <link rel="stylesheet" href="/styles/edit-create.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,8 +18,8 @@
       <img id="header-logo" src="/images/logo.png" alt="" />
       <nav>
         <ul>
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="/index.html" class="nav-link">Home</a></li>
+          <li><a href="/about.html" class="nav-link">About</a></li>
           <li><a href="/posts.html" class="nav-link">Blog</a></li>
         </ul>
         <ul id="sign-in">
@@ -29,7 +29,7 @@
       </nav>
     </header>
     <main>
-      <h2>Edit Blog Post</h2>
+      <h1>Edit Blog Post</h1>
       <form id="edit-post-form">
         <label for="title">Title</label>
         <input type="text" id="title" name="title" required />
@@ -47,6 +47,7 @@
         <input type="text" id="image-alt" name="image-alt" />
 
         <button type="submit">Update Post</button>
+        <button type="button" id="delete-post-button">Delete Post</button>
       </form>
 
       <div id="error-message"></div>

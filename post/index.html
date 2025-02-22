@@ -17,15 +17,48 @@
     <header>
       <img id="header-logo" src="/images/logo.png" alt="" />
       <nav>
-        <ul>
+        <div class="menu-toggle" id="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <ul class="nav-menu" id="nav-menu">
           <li><a href="/index.html" class="nav-link">Home</a></li>
           <li><a href="/about.html" class="nav-link">About</a></li>
-          <li><a href="posts.html" class="nav-link">Blog</a></li>
+          <li><a href="/posts.html" class="nav-link">Blog</a></li>
         </ul>
-        <ul id="sign-in">
-          <li><a href="/account/register.html" class="nav-link">Sign Up</a></li>
-          <li><a href="/account/login.html" class="nav-link">Log In</a></li>
+
+        <ul id="sign-in" class="nav-menu">
+          <li>
+            <a href="/account/register.html" class="nav-link register-profile"
+              >Sign Up</a
+            >
+          </li>
+          <li>
+            <a href="/account/login.html" class="nav-link login-logout"
+              >Log In</a
+            >
+          </li>
         </ul>
+
+        <div class="mobile-menu" id="mobile-menu">
+          <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="/posts.html" class="nav-link">Blog</a></li>
+            <li>
+              <a href="/account/register.html" class="nav-link register-profile"
+                >Sign Up</a
+              >
+            </li>
+            <li>
+              <a href="/account/login.html" class="nav-link login-logout"
+                >Log In</a
+              >
+            </li>
+          </ul>
+        </div>
       </nav>
     </header>
 
@@ -55,5 +88,6 @@
       <p>&copy;RacingBear 2025. All rights reserved</p>
     </footer>
     <script src="/JS/post.js"></script>
+    <script src="/JS/app.js"></script>
   </body>
 </html>

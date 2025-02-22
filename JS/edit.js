@@ -46,6 +46,38 @@ document.addEventListener("DOMContentLoaded", async () => {
       : "";
     document.getElementById("image-url").value = post.media?.url || "";
     document.getElementById("image-alt").value = post.media?.alt || "";
+
+    // Handle "Delete Post" button click
+    document
+      .getElementById("delete-post-button")
+      .addEventListener("click", async () => {
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this post?"
+        );
+        if (!confirmDelete) return;
+
+        try {
+          const deleteResponse = await fetch(
+            `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+
+          if (!deleteResponse.ok) {
+            throw new Error("Failed to delete the post");
+          }
+
+          alert("Post deleted successfully!");
+          window.location.href = "/account/profile.html"; // Redirect to the profile page
+        } catch (error) {
+          console.error("Error deleting post:", error);
+          alert("An error occurred while deleting the post.");
+        }
+      });
   } catch (error) {
     console.error("Error fetching post:", error);
     alert("An error occurred while fetching the post data.");
@@ -70,6 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Update post form submission (PUT request)
   document
     .getElementById("edit-post-form")
     .addEventListener("submit", async (event) => {

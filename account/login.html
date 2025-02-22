@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/styles.css" />
     <link rel="stylesheet" href="/styles/login.css" />
+    <link rel="stylesheet" href="/styles/hamburger-menu.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,14 +18,48 @@
     <header>
       <img id="header-logo" src="/images/logo.png" alt="" />
       <nav>
-        <ul>
-          <li><a href="/index.html" class="nav-link">Home</a></li>
+        <div class="menu-toggle" id="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="/about.html" class="nav-link">Home</a></li>
           <li><a href="/about.html" class="nav-link">About</a></li>
-          <li><a href="/blog.html" class="nav-link">Blog</a></li>
+          <li><a href="/posts.html" class="nav-link">Blog</a></li>
         </ul>
-        <ul id="sign-in">
-          <li><a href="/account/login.html" class="nav-link">Log In</a></li>
+
+        <ul id="sign-in" class="nav-menu">
+          <li>
+            <a href="/account/register.html" class="nav-link register-profile"
+              >Sign Up</a
+            >
+          </li>
+          <li>
+            <a href="/account/login.html" class="nav-link login-logout"
+              >Log In</a
+            >
+          </li>
         </ul>
+
+        <div class="mobile-menu" id="mobile-menu">
+          <ul>
+            <li><a href="/index.html" class="nav-link">Home</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/posts.html" class="nav-link">Blog</a></li>
+            <li>
+              <a href="/account/register.html" class="nav-link register-profile"
+                >Sign Up</a
+              >
+            </li>
+            <li>
+              <a href="/account/login.html" class="nav-link login-logout"
+                >Log In</a
+              >
+            </li>
+          </ul>
+        </div>
       </nav>
     </header>
     <main>
@@ -44,12 +79,12 @@
       </section>
 
       <p id="error-message"></p>
-
-      <script src="/JS/login.js"></script>
     </main>
     <footer>
       <p>Instagram Twitter Snapchat Youtube</p>
       <p>&copy;RacingBear 2025. All rights reserved</p>
     </footer>
+    <script src="/JS/app.js"></script>
+    <script src="/JS/login.js"></script>
   </body>
 </html>
