@@ -12,7 +12,6 @@ document
     const avatarAlt = document.getElementById("avatar-alt").value.trim();
     const bannerUrl = document.getElementById("banner-url").value.trim();
     const bannerAlt = document.getElementById("banner-alt").value.trim();
-    const venueManager = document.getElementById("venueManager").checked;
     const messageElement = document.getElementById("message");
 
     // Bio, avatar alt, and banner alt must be less than 160 characters
@@ -21,13 +20,14 @@ document
       messageElement.style.color = "red";
       return;
     }
-    if (avatarAlt.length > 160) {
+    if (avatarAlt.length > 160) { //Allowed only less than 160 characters
       messageElement.textContent =
         "Avatar alt text must be less than 160 characters.";
       messageElement.style.color = "red";
       return;
     }
-    if (bannerAlt.length > 160) {
+    if (avatarAlt.length > 160) { //Allowed only less than 160 characters
+    if (bannerAlt.length > 160) { 
       messageElement.textContent =
         "Banner alt text must be less than 160 characters.";
       messageElement.style.color = "red";
@@ -39,14 +39,13 @@ document
       name,
       email,
       password,
-      bio: bio || undefined, // Exclude if empty
+      bio: bio || undefined,
       avatar: avatarUrl
         ? { url: avatarUrl, alt: avatarAlt || "Avatar image" }
         : undefined,
       banner: bannerUrl
         ? { url: bannerUrl, alt: bannerAlt || "Banner image" }
         : undefined,
-      venueManager,
     };
 
     try {
