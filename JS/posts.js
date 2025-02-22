@@ -1,12 +1,10 @@
-const postsPerPage = 12;
-let currentPage = 1;
-let allPosts = [];
+document.addEventListener("DOMContentLoaded", async () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST
 
-// Fetch and display multiple blog posts with pagination
-async function fetchBlogPosts() {
   try {
     const response = await fetch(
-      "https://v2.api.noroff.dev/blog/posts/BtheBEST"
+      `https://v2.api.noroff.dev/blog/posts/${userName}`
     );
 
     if (!response.ok) {
@@ -19,34 +17,29 @@ async function fetchBlogPosts() {
       throw new Error("Invalid or empty data received.");
     }
 
-    allPosts = data.data; // Store all posts
-
-    // Display first page
-    displayBlogPosts(getPaginatedPosts(currentPage));
+    // Display all blog posts in the main content area
+    displayBlogPosts(data.data);
 
     // Get the 3 latest posts for the carousel
-    displayCarousel(allPosts.slice(0, 3));
-
-    // Setup pagination
-    setupPagination(allPosts.length);
+    const latestPosts = data.data.slice(0, 3);
+    displayCarousel(latestPosts);
   } catch (error) {
     console.error("Error fetching blog posts:", error);
     document.getElementById(
       "blog-container"
     ).innerHTML = `<p>Failed to load blog posts.</p>`;
   }
-}
+});
 
-// Get paginated posts
-function getPaginatedPosts(page) {
-  const startIndex = (page - 1) * postsPerPage;
-  return allPosts.slice(startIndex, startIndex + postsPerPage);
+// Function to truncate text to a specific length
+function truncateText(text, maxLength) {
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
 
 // Function to display multiple blog posts
 function displayBlogPosts(posts) {
   const container = document.getElementById("blog-container");
-  container.innerHTML = ""; // Clear previous posts
+  container.innerHTML = ""; // Clear container before adding new posts
 
   posts.forEach((post) => {
     const postElement = document.createElement("div");
@@ -71,6 +64,7 @@ function displayBlogPosts(posts) {
       }
     `;
 
+    // Add click event to redirect to post page
     postElement.addEventListener("click", () => {
       window.location.href = `/post/index.html?id=${post.id}`;
     });
@@ -79,46 +73,16 @@ function displayBlogPosts(posts) {
   });
 }
 
-// Function to setup pagination controls
-function setupPagination(totalPosts) {
-  const totalPages = Math.ceil(totalPosts / postsPerPage);
-  const paginationContainer = document.getElementById("pagination");
-  paginationContainer.innerHTML = ""; // Clear previous buttons
-
-  for (let i = 1; i <= totalPages; i++) {
-    const button = document.createElement("button");
-    button.textContent = i;
-    button.classList.add("pagination-button");
-
-    if (i === currentPage) {
-      button.classList.add("active");
-    }
-
-    button.addEventListener("click", () => {
-      currentPage = i;
-      displayBlogPosts(getPaginatedPosts(currentPage));
-      setupPagination(totalPosts);
-    });
-
-    paginationContainer.appendChild(button);
-  }
-}
-
-// Function to truncate text to a specific length
-function truncateText(text, maxLength) {
-  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-}
-
 // Function to display carousel with latest posts
 function displayCarousel(posts) {
   const carouselContainer = document.getElementById("carousel-container");
-  carouselContainer.innerHTML = ""; // Clear previous posts
+  carouselContainer.innerHTML = ""; // Clear carousel before adding new posts
 
   posts.forEach((post) => {
     const carouselItem = document.createElement("div");
     carouselItem.classList.add("carousel-item");
     carouselItem.innerHTML = `
-      <a href="/post/index.html?id=${post.id}">
+      <a href="/post/index.html?id=${post.id}"> <!-- Correct URL format with query param -->
         <img src="${post.media?.url}" alt="${post.media?.alt}" />
         <div class="carousel-caption">
           <h2>${post.title}</h2>
@@ -128,7 +92,7 @@ function displayCarousel(posts) {
     carouselContainer.appendChild(carouselItem);
   });
 
-  // Carousel functionality
+  // Initialize carousel functionality
   let currentIndex = 0;
   const totalPosts = posts.length;
   const prevButton = document.getElementById("prev-button");
@@ -165,14 +129,16 @@ function displayCarousel(posts) {
 
   carouselContainer.addEventListener("touchend", () => {
     if (startX > endX + 30) {
+      // Swipe left
       currentIndex = (currentIndex + 1) % totalPosts;
       updateCarousel();
     } else if (startX < endX - 30) {
+      // Swipe right
       currentIndex = (currentIndex - 1 + totalPosts) % totalPosts;
       updateCarousel();
     }
   });
 }
 
-// Fetch and display posts
+// Call the function to fetch and display blog posts
 fetchBlogPosts();

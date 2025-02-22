@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const postId = urlParams.get("id");
   const accessToken = localStorage.getItem("accessToken");
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST
 
   if (!accessToken) {
     window.location.href = "/login.html";
@@ -15,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
+      `https://v2.api.noroff.dev/blog/posts/${userName}/${postId}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -36,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     document.getElementById("title").value = post.title || "";
-    document.getElementById("body").innerHTML = formatBodyText(post.body || ""); // Ensures correct paragraph formatting
+    document.getElementById("body").innerHTML = formatBodyText(post.body || ""); // Ensure correct paragraph formatting
     document.getElementById("tags").value = post.tags
       ? post.tags.join(", ")
       : "";
@@ -54,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
           const deleteResponse = await fetch(
-            `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
+            `https://v2.api.noroff.dev/blog/posts/${userName}/${postId}`,
             {
               method: "DELETE",
               headers: {
@@ -115,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
           const response = await fetch(
-            `https://v2.api.noroff.dev/blog/posts/BtheBEST/${postId}`,
+            `https://v2.api.noroff.dev/blog/posts/${userName}/${postId}`,
             {
               method: "PUT",
               headers: {
@@ -150,5 +152,5 @@ function formatBodyText(text) {
   return text
     .split(/\n+/) // Split at every new line
     .map((line) => `<p>${line.trim()}</p>`) // Wrap each line in a <p> tag
-    .join(""); // Join all paragraphs into one string
+    .join(""); // Join them together without extra spaces
 }

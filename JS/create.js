@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const accessToken = localStorage.getItem("accessToken");
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST
 
   // Redirect to login page if no access token
   if (!accessToken) {
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      // Get form values and ensure line breaks create new paragraphs
+      // Get form values and format body text
       const newPostData = {
         title: document.getElementById("title").value,
         body: formatBodyText(document.getElementById("body").innerText), // Convert plain text into <p> wrapped HTML
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       try {
         // Send POST request to create the new post
         const response = await fetch(
-          `https://v2.api.noroff.dev/blog/posts/BtheBEST`,
+          `https://v2.api.noroff.dev/blog/posts/${userName}`, // Dynamic userName in endpoint
           {
             method: "POST",
             headers: {

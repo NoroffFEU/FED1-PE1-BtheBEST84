@@ -12,12 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("username").textContent = userData.name;
   document.getElementById("email").textContent = userData.email;
 
-  // Hide "Create New Post" button if the user is not "BtheBEST"
-  const createPostButton = document.getElementById("create-post-button");
-  if (userName !== "BtheBEST" && createPostButton) {
-    createPostButton.style.display = "none";
-  }
-
   try {
     const response = await fetch(
       `https://v2.api.noroff.dev/blog/posts/${userName}`,
