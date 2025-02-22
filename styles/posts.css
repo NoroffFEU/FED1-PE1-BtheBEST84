@@ -184,4 +184,8 @@
   .carousel-caption > h2 {
     font-size: 36px;
   }
+
+  .pagination-button {
+    font-size: 36px;
+  }
 }
