@@ -66,7 +66,7 @@
       <section id="form">
         <form id="login-form">
           <div>
-            <h2>Login</h2>
+            <h2>Log in</h2>
             <label for="email">Email:</label><br />
             <input type="email" id="email" name="email" required />
           </div>
@@ -74,7 +74,7 @@
             <label for="password">Password:</label><br />
             <input type="password" id="password" name="password" />
           </div>
-          <button type="submit">Login</button>
+          <button type="submit">Log in</button>
         </form>
       </section>
 
@@ -97,6 +97,12 @@
       </ul>
       <p>&copy;RacingBear 2025. All rights reserved</p>
     </footer>
+    <div id="login-modal" class="modal">
+      <div class="modal-content">
+        <p>Logged in successfully!</p>
+        <button id="close-modal">OK</button>
+      </div>
+    </div>
     <script src="/JS/app.js"></script>
     <script src="/JS/login.js"></script>
   </body>

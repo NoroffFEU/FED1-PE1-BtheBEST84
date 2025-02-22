@@ -8,7 +8,7 @@ main {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: centerJa;
+  font: inherit;
 }
 
 #form {
@@ -27,10 +27,62 @@ main {
   height: 200px;
   width: 200px;
   padding: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #error-message {
   color: red;
   -webkit-text-stroke: 0.5px black;
   font-size: 1.2em;
+}
+
+input {
+  border-radius: 5px;
+}
+
+button {
+  background-color: #00c2bc;
+  color: white;
+  padding: 5px 30px;
+  border-radius: 10px;
+  font: inherit;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #ff7347;
+}
+
+.modal {
+  display: none; /* Make sure it's hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+#close-modal {
+  margin-top: 10px;
+  padding: 5px 15px;
+  background-color: #ff7347;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#close-modal:hover {
+  background-color: #ff5722;
 }

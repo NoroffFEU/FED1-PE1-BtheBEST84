@@ -4,6 +4,13 @@ const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const errorMessage = document.getElementById("error-message");
 
+// Get modal elements
+const loginModal = document.getElementById("login-modal");
+const closeModalButton = document.getElementById("close-modal");
+
+// Hide the modal initially
+loginModal.style.display = "none";
+
 // Add submit event listener to the form
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -57,11 +64,14 @@ form.addEventListener("submit", async (event) => {
       // Store user profile data in localStorage
       localStorage.setItem("userData", JSON.stringify(userData));
 
-      console.log("Logged in successfully:", data);
-      alert("Login successful!");
+      // Show login success modal
+      loginModal.style.display = "flex";
 
-      // Redirect to /account/profile.html
-      window.location.href = "/account/profile.html"; // Redirects to the profile page
+      // Redirect to profile after clicking "OK"
+      closeModalButton.addEventListener("click", () => {
+        loginModal.style.display = "none";
+        window.location.href = "/account/profile.html"; // Redirect to profile page
+      });
     }
   } catch (error) {
     errorMessage.textContent = "An error occurred. Please try again later.";
