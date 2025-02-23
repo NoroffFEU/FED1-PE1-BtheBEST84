@@ -168,6 +168,10 @@ h2 {
   -webkit-text-stroke: white 0.5px;
 }
 
+#copyright {
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   #hero-header {
     font-size: 2em;
