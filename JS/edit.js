@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           window.location.href = "/account/profile.html";
         }, 1500);
       } catch (error) {
-        console.error("Error deleting post:", error);
         alert("An error occurred while deleting the post.");
       }
     });
@@ -156,12 +155,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             window.location.href = "/account/profile.html";
           }, 1500);
         } catch (error) {
-          console.error("Error updating post:", error);
           alert("An error occurred while updating the post.");
         }
       });
   } catch (error) {
-    console.error("Error fetching post:", error);
     alert("An error occurred while fetching the post data.");
   }
 });

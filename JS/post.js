@@ -69,7 +69,6 @@ async function fetchSinglePost() {
       `;
     }
   } catch (error) {
-    console.error("Error fetching blog post:", error);
     document.body.innerHTML = "<p>Failed to load blog post.</p>";
   }
 }

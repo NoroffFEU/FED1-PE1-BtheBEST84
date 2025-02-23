@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const latestPosts = allPosts.slice(0, 3);
     displayCarousel(latestPosts);
   } catch (error) {
-    console.error("Error fetching blog posts:", error);
     document.getElementById(
       "blog-container"
     ).innerHTML = `<p>Failed to load blog posts.</p>`;

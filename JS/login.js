@@ -72,6 +72,5 @@ form.addEventListener("submit", async (event) => {
     }
   } catch (error) {
     errorMessage.textContent = "An error occurred. Please try again later.";
-    console.error("Error during login:", error);
   }
 });

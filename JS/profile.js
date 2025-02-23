@@ -88,7 +88,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       blogContainer.appendChild(noPostsMessage);
     }
   } catch (error) {
-    console.error("Error fetching posts:", error);
     const errorMessage = document.createElement("p");
     errorMessage.textContent = "Error fetching posts.";
     document.getElementById("blog-container").appendChild(errorMessage);
