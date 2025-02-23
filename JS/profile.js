@@ -84,10 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     } else {
       const noPostsMessage = document.createElement("p");
-      noPostsMessage.textContent =
-        userName !== "BtheBEST"
-          ? "You are not a content manager on this site."
-          : "No posts available.";
+      noPostsMessage.textContent = "No posts available.";
       blogContainer.appendChild(noPostsMessage);
     }
   } catch (error) {
