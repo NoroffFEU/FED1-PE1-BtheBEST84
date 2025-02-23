@@ -203,4 +203,9 @@
   .pagination-button {
     font-size: 36px;
   }
+
+  #read-more {
+    font-size: 20px;
+    width: 100px;
+  }
 }
