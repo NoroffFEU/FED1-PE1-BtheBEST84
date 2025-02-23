@@ -86,4 +86,7 @@
   .menu-toggle {
     display: flex;
   }
+  .mobile-menu a {
+    font-size: 36px;
+  }
 }
