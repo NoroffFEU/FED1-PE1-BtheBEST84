@@ -27,6 +27,7 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 80%;
 }
 
 footer {
@@ -109,7 +110,7 @@ h2 {
 }
 
 #hero-picture {
-  width: 80%;
+  width: 60%;
 }
 
 .modal {
