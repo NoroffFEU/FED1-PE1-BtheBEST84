@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST
+  const userName = userData?.name || "BtheBEST"; // Use logged-in user or default to BtheBEST to show the not logged in user the posts
 
   let currentPage = 1;
   const postsPerPage = 12;
@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     allPosts = data.data; // Store all posts
-    displayPaginatedPosts(); // Show posts for the first page
+    displayPaginatedPosts(); // Show 12 posts for the first page
 
-    // Get the 3 latest posts for the carousel
+    // Get the 3 latest posts for the carousel, throw error if failing
     const latestPosts = allPosts.slice(0, 3);
     displayCarousel(latestPosts);
   } catch (error) {
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function updatePaginationButtons() {
     const paginationContainer = document.getElementById("pagination");
-    paginationContainer.innerHTML = ""; // Clear old buttons
+    paginationContainer.innerHTML = ""; // Clear unused buttons
 
     if (allPosts.length > postsPerPage) {
       if (currentPage > 1) {
@@ -121,12 +121,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Function to truncate text to a specific length
+// Function to trunc the text to a specific length
 function truncateText(text, maxLength) {
   return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
 
-// Function to display carousel with latest posts
+// Function to display carousel with the three latest posts
 function displayCarousel(posts) {
   const carouselContainer = document.getElementById("carousel-container");
   carouselContainer.innerHTML = ""; // Clear carousel before adding new posts
@@ -145,7 +145,7 @@ function displayCarousel(posts) {
     carouselContainer.appendChild(carouselItem);
   });
 
-  // Initialize carousel functionality
+  // Start the carousel functionality
   let currentIndex = 0;
   const totalPosts = posts.length;
   const prevButton = document.getElementById("prev-button");
@@ -182,11 +182,11 @@ function displayCarousel(posts) {
 
   carouselContainer.addEventListener("touchend", () => {
     if (startX > endX + 30) {
-      // Swipe left
+      // When user swipes left
       currentIndex = (currentIndex + 1) % totalPosts;
       updateCarousel();
     } else if (startX < endX - 30) {
-      // Swipe right
+      // When user swipes right
       currentIndex = (currentIndex - 1 + totalPosts) % totalPosts;
       updateCarousel();
     }

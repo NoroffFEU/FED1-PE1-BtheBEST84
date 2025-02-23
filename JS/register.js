@@ -1,7 +1,7 @@
 document
   .getElementById("register-form")
   .addEventListener("submit", async function (event) {
-    event.preventDefault(); // Prevent page reload
+    event.preventDefault();
 
     // Collect form data
     const name = document.getElementById("name").value.trim();
@@ -20,14 +20,14 @@ document
       messageElement.style.color = "red";
       return;
     }
-    if (avatarAlt.length > 160) { //Allowed only less than 160 characters
+    if (avatarAlt.length > 160) {
+      //Allowed only less than 160 characters
       messageElement.textContent =
         "Avatar alt text must be less than 160 characters.";
       messageElement.style.color = "red";
       return;
     }
-    if (avatarAlt.length > 160) { //Allowed only less than 160 characters
-    if (bannerAlt.length > 160) { 
+    if (bannerAlt.length > 160) {
       messageElement.textContent =
         "Banner alt text must be less than 160 characters.";
       messageElement.style.color = "red";

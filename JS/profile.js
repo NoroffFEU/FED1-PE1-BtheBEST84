@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const accessToken = localStorage.getItem("accessToken");
 
   if (!userData || !accessToken) {
-    window.location.href = "/login.html"; // Redirect if no user data or token is found
+    window.location.href = "/login.html"; // Redirect if access token is not found
     return;
   }
 
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           postElement.appendChild(postImage);
         }
 
-        // Create post body (truncate if necessary)
+        // Create post body and truncate if too long
         const postBody = document.createElement("p");
         postBody.textContent = post.body
           ? post.body.length > 100
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             : post.body
           : "No content available.";
 
-        // Append title and body to the post element
+        // Add title and body to the post element
         postElement.appendChild(postTitle);
         postElement.appendChild(postBody);
 

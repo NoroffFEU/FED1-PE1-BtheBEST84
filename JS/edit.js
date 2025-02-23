@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Get modal elements
   const successModal = document.getElementById("success-modal");
   const successMessage = document.getElementById("success-message");
-  const closeSuccessModal = document.getElementById("close-success-modal");
 
   const deleteModal = document.getElementById("delete-modal");
   const deleteMessage = document.getElementById("delete-message");
