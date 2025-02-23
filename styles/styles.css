@@ -157,11 +157,15 @@ h2 {
 #confirm {
   background-color: #ff5722;
   color: white;
+  font: inherit;
+  -webkit-text-stroke: #000 0.5px;
 }
 
 #cancel {
   background-color: #ccc;
   color: black;
+  font: inherit;
+  -webkit-text-stroke: white 0.5px;
 }
 
 @media (max-width: 768px) {
