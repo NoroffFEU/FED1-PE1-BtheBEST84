@@ -53,7 +53,7 @@ Fork the repository
 ## 📬 Contact
 Feel free to reach out through:
 
-[LinkedIn](https://linkedin.com/in/bjørn-thomas-torvund-723189a7)
-[Twitter](https://twitter.com/thomastorvund")
-[Mail](mailto:bjorn.thomas.torvund@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://linkedin.com/in/bjørn-thomas-torvund-723189a7)
+[![Twitter](https://img.shields.io/badge/-Twitter-blue?style=flat&logo=twitter&logoColor=white)](https://twitter.com/thomastorvund)
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:bjorn.thomas.torvund@gmail.com)
 
